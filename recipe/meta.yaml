@@ -6,26 +6,28 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip
   sha256: 85650df2bc1fe9b1f5a2b07571069c1902dd6758fc483e020ff120f0813bb009
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
 
 requirements:
   host:
     - pip
-    - python
+    - python {{ python_min }}
   run:
-    - python
+    - python >={{ python_min }}
     - requests
     - selenium
     - six
     - tldextract
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - seleniumrequests
 
